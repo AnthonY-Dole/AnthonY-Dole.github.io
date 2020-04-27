@@ -1,0 +1,51 @@
+
+
+    <!doctype html>
+    <html lang="fr">
+      <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"
+        ></script>
+        <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" > 
+        <link rel="stylesheet" href="./css/style.css" > 
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+       crossorigin=""></script>
+      
+        <title>Projet 3D Meteo</title>
+      </head>
+        <body onload="onLoad()">
+            <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-3">World Meteo</h1>
+                <p class="lead">Connaitre la méteo partout dans le monde</p>
+                <hr class="my-4">
+               
+              </div>
+              <div id="map"></div>
+              
+            <form name="form1">
+                <div class="form-group">
+                    <label class="col-form-label" for="inputDefault">Latitude :</label>
+                    <input type="text" class="form-control"  id="inputDefault" name="field1" size="10" value="48.89">
+                    <label class="col-form-label" for="inputDefault">Longitude :</label>
+                    <input type="text" class="form-control" id="inputDefault2"name="field2" size="10"  value="2.33">
+                    <input class="button1 btn btn-info" type="button" value="Ajouter un point de géolocalisation" onClick=onClick()>
+                    <input class="button2 btn btn-success" type="button" value="Suprimmer un point de géolocalisation" onClick=onClear()>
+                    <output type="text" name="field3" size="14">
+                </div>
+            </form>
+        </div>
+            <div id="container"></div>
+            <script type="text/javascript" src="earth.js"></script>
+        </body>
+    </html>

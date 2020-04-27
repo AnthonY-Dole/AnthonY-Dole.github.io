@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    font-family: "Arial", sans-serif;
+    font-size: 11px;
+  }
+   
+  p {
+    background: #CCCCCC;
+    line-height: 32px;
+  }
+   
+  input.button1 {
+    background: #990000;
+    color: #ffffff;
+    width: 180px;
+    margin: 2px;
+    line-height: 20px;
+  }
+   
+  input.button1:hover {
+    background: #ffffff;
+    color: #990000;
+  }
+   
+  input.button2 {
+    background: #ff6600;
+    color: #ffffff;
+    width: 200px;
+    margin: 2px;
+    line-height: 20px;
+  }
+   
+  input.button2:hover {
+    background: #ffffff;
+    color: #ff6600;
+  }
+   
+  body {
+    background: #000000;
+  }
