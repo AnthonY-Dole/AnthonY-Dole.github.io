@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" > 
+    <link rel="stylesheet" href="./css/style.css" > 
+  
+    <title>TP3</title>
+  </head>
+  <body>
+<H1>Exercice 1</H1>
+<img id="sea" width="1" height="1"
+src="image.jpg" alt="The sea">
+
+<p>Canvas:</p>
+
+<canvas id="myCanvas" width="800" height="400"
+style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<p>Svg:</p>
+<svg width="800" height="400">
+  <rect x="0" y="0" id="ciel" width="800" height="200" style="fill:#74b9ff;" />
+  <rect x="0" y="200" width="800" height="200" style="fill:#3498db;" />
+  <circle  id="soleil" cx="50" cy="50" r="40" stroke="orange" stroke-width="3" fill="yellow" />
+    <rect stroke="#000" id="svg_1" height="37.000001" width="346" y="242.453124" x="98.5" stroke-width="1.5" fill="#fff"/>
+    <path id="voile" d="m250.986191,239.686251l0,-142.153852l50.769205,122.153852l-50.769205,0z" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000000" fill="#000000"/>
+    </svg>
+  <H1>Exercice 2 <strong>BONUS</strong> </H1>
+  <div class="scene">
+    <div class="cube" id="lecube">
+      <div class="cube__face cube__face--front"><img src="face-1.jpg" alt=""></div>
+      <div class="cube__face cube__face--back"><img src="face-2.jpg" alt=""></div>
+      <div class="cube__face cube__face--right"><img src="face-3.jpg" alt=""></div>
+      <div class="cube__face cube__face--left"><img src="face-4.jpg" alt=""></div>
+      <div class="cube__face cube__face--top"><img src="face-5.jpg" alt=""></div>
+      <div class="cube__face cube__face--bottom"><img src="face-6.jpg" alt=""></div>
+    </div>
+  </div>
+ <button type="button"  onclick="myFunction()" class="btn btn-danger">Lancer aléatoire</button>
+
+ 
+<!---  -->
+
+
+  <H1>Exercice 3 </H1>
+  <a href="three.html"><button type="button"  class="btn btn-success">TreeJS PAGE</button></a>
+  
+
+
+<script>
+  
+  function myFunction() {
+    var random = ['back', 'front','right','left','top','bottom'];
+    var numRandom = Math.floor(Math.random()*random.length);
+var motRandom = random[numRandom];
+
+
+  var showClass = 'show-'+motRandom;
+  if ( currentClass ) {
+    cube.classList.remove( currentClass );
+  }
+  cube.classList.add( showClass );
+  currentClass = showClass;
+}
+
+
+
+window.onload = function() {
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("sea");
+    canvas.width=800
+canvas.height=400
+ctx.drawImage(img, 0, 0, 800, 400);
+ctx.beginPath();
+ctx.strokeStyle = "yellow";
+ctx.fillStyle = "yellow";
+ctx.arc(95,50,40,0,2*Math.PI);
+ctx.stroke();
+ctx.fill();
+ctx.str
+
+
+
+var context = canvas.getContext("2d");
+context.fillStyle = '#000000';
+context.fillRect(367, 236, 222, 32);
+context.strokeStyle = '#FF0000';
+
+context.beginPath();
+context.moveTo(367,236 );
+context.lineTo(482, 74);
+context.lineTo(585, 236);
+context.closePath();
+context.fillStyle = "#FFCC00";
+context.fill();
+
+};
+var jour =true;
+soleil.addEventListener('click', event => {
+  if(jour){
+    ciel.style.fill = "#74b9ff";
+    jour =false
+  }
+  else{
+    ciel.style.fill = "grey";
+    jour =true;
+  }
+  })
+//Cube
+var cube = document.querySelector('.cube');
+var radioGroup = document.querySelector('.radio-group');
+var currentClass = '';
+
+</script>
+  </script>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

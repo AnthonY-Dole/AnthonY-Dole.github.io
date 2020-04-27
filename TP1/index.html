@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" > 
+    <link rel="stylesheet" href="./css/style.css" > 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+    <title>Bienvenue sur mon site</title>
+  </head>
+  <body>
+
+     
+
+<h2 class="align-middle">Exercice 1:</h2>
+  <p id="demo"></p>
+  <button type="button" class="btn btn-danger" onclick="getLocation()">Trouver ma position</button>
+  <hr>
+  <h2>Exercice 2:</h2>
+  <h6>Orientation:</h6>
+  <p id="orientation"></p>
+  <h6>Position:</h6>
+  <p id="motion"></p>
+  <hr>
+  <h2>Exercice 3:</h2>
+  <h6>Event:</h6>
+  <h4 ontouchstart="myFunction()">Touche moi pour obtenir une alerte</h4>
+  <p id="modal"></p>
+  <h2>Exercice 4:</h2>
+  <h6>Faite glisser le marqueur pour connaitre la distance entre 2 points</h6>
+  <span>utilisation de la géolocalisation + touch event + création d'un cercle en fonction de l'orientation alpha </span>
+  <br>
+  <span class="badge badge-warning"><strong>Attention :</strong></span>
+  <p>actualiser en bougeant le téléphone pour faire varier la taille du cercle</p>
+  <div id="map" ></div>
+
+
+  <script>
+    //------------------------------Position----------------------
+    var x = document.getElementById("demo");
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+      } else { 
+        x.innerHTML = "Geolocation n'est pas supporter";
+      }
+    }
+        
+    function showPosition(position) {
+        x.innerHTML="Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude +  "<br>Vitesse: " + position.coords.speed +"  secondes"  +"<br>Prescision: "+ position.coords.accuracy +"  mètres" +"<br>Timestamp: "+ position.timestamp;
+    }
+        //------------------------------Orientation----------------------
+    
+    if(window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", orientation, false);
+    } 
+    else {
+      alert('ne supporte pas le device');
+          }
+  function orientation(event) {
+    var alpha = event.alpha;
+    var beta = event.beta;
+    var gamma = event.gamma;
+    document.getElementById("orientation").innerHTML = "<ul><li>Alpha : " + alpha + "</li><li>Beta : " + beta + "</li><li>Gamma : " + gamma + "</li></ul>"; 
+    }
+        //------------------------------Motion----------------------
+    if(window.DeviceMotionEvent) {
+        window.addEventListener("devicemotion", motion, false);
+    } else {
+        alert('ne supporte pas le device');
+    }
+    function motion(event) {
+      var x = event.accelerationIncludingGravity.x;
+      var y = event.accelerationIncludingGravity.y;
+      var z = event.accelerationIncludingGravity.z;
+      document.getElementById("motion").innerHTML = "<ul><li>X : " + x + "</li><li>Y : " + y + "</li><li>Z : " + z + "</li></ul>"; 
+    }
+       //------------------------------Touch event----------------------
+
+
+       function myFunction() {
+  document.getElementById("modal").innerHTML = alert('Tu as touché la phrase bravo');
+
+}
+
+//----------------------------------------BONUS
+navigator.geolocation.getCurrentPosition(function(location) {
+  var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+  
+  
+  var max = 0;
+
+window.addEventListener("deviceorientation", function(event) {
+
+  var max = 0;
+  if (max < event.alpha){
+    max = event.alpha
+  
+  }
+  
+
+
+  var mymap = L.map('map').setView(latlng, 13)
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoiYmJyb29rMTU0IiwiYSI6ImNpcXN3dnJrdDAwMGNmd250bjhvZXpnbWsifQ.Nf9Zkfchos577IanoKMoYQ'
+  }).addTo(mymap);
+
+  var marker = L.marker(latlng).addTo(mymap);
+  var marker2 = L.marker(latlng, {draggable:'true'}).bindPopup("").addTo(mymap);
+      var ligne = L.polyline([]).addTo(mymap);
+
+      marker.on('dragend', findrag);
+      marker2.on('dragend', findrag);
+      marker.on('drag', deplacement);
+      marker2.on('drag', deplacement);
+      
+      function findrag(e) {
+      	var mark = e.target;
+        var start = marker.getLatLng();
+        var end = marker2.getLatLng();
+        distance = Math.round(start.distanceTo(end) / 1000.0);
+        mark.getPopup().setContent('La distance = '+distance+' km');
+        mark.openPopup();
+      };
+      function deplacement(e) {
+				ligne.setLatLngs([marker.getLatLng(), marker2.getLatLng()]);
+      }
+      var influence = L.circle(marker.getLatLng(),max).addTo(mymap);
+    });
+});
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

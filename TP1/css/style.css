@@ -1,0 +1,13 @@
+
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+#motion{
+    color: #34495e;
+    font-weight: bold;
+}
+#orientation{
+    color: #3498db;
+    font-weight: bold;
+}
