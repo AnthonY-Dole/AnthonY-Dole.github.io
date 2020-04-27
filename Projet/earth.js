@@ -64,6 +64,8 @@ function setup()
     });
  
     render();
+
+   
 }
  
 function render()
@@ -112,7 +114,39 @@ function onClick()
   var lon = form1.field2.value;
  
   // test
+
   apiRequest(lat, lon);
+  
+   //
+    navigator.geolocation.getCurrentPosition(function(location) {
+  var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+
+  var layer = new L.StamenTileLayer("terrain");
+var map = new L.Map("macarte2", {
+    center: new L.LatLng(location.coords.latitude, location.coords.longitude),
+    zoom: 5
+});
+map.addLayer(layer);
+var latlngs = [[32.296762, -64.790501],[27.101416, -80.900932],[17.947276, -66.353661]];
+var polygon = L.polygon(latlngs, {color: 'red'}).addTo(map);
+  
+var marker = L.marker(latlng).addTo(map);
+      var circle = L.circle(marker.getLatLng(),location.coords.accuracy).addTo(map);
+      
+      var marker2 = L.marker([ lat, lon]).addTo(map);
+      var ligne = L.polyline([]).addTo(map);
+    
+        var start = marker.getLatLng();
+        var end = marker2.getLatLng();
+        console.log(end);
+        distance = Math.round(start.distanceTo(end) / 1000.0);
+        marker.bindPopup('La distance entre ta position et  '+cityname +' '+distance+' km');
+        marker.openPopup();
+        console.log(distance);
+        ligne.setLatLngs([marker.getLatLng(), marker2.getLatLng()]);
+        
+       
+      });
 }
  
 function onClear()
@@ -160,7 +194,7 @@ function getOpenWeatheMapQueri(lat, lon)
   var queri = api + "?lat=" + lat + "&lon=" + lon + "&appid=d976d836a93f588b00a40de7f44184eb";
   return queri;
 }
- 
+ var cityname = null;
 // OpenWeatheMap API 
 function apiRequest(lat, lon)
 {
@@ -175,7 +209,7 @@ function apiRequest(lat, lon)
     var weather = json.weather[0].main;
     var temp = new Number(json.main.temp);
     temp -= tempOfset;
- 
+ cityname =json.name;
     form1.field3.value = json.name + "  |  Meteo : " + weather + "  |  Temperature : " + temp.toFixed(1) + "°C  Humidite : " + json.main.humidity + "%";
  
     //
