@@ -75,7 +75,33 @@ function render()
     controls.update();
     renderer.render(scene, camera);
 }
- 
+navigator.geolocation.getCurrentPosition(function(location) {
+  var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+
+  var layer = new L.StamenTileLayer("terrain");
+var map = new L.Map("macarte2", {
+    center: new L.LatLng(location.coords.latitude, location.coords.longitude),
+    zoom: 5
+});
+map.addLayer(layer);
+
+var marker = L.marker(latlng).addTo(map);
+      var circle = L.circle(marker.getLatLng(),location.coords.accuracy).addTo(map);
+      
+      var marker2 = L.marker([ positionlatlong[0], positionlatlong[1]]).addTo(map);
+      var ligne = L.polyline([]).addTo(map);
+    
+        var start = marker.getLatLng();
+        var end = marker2.getLatLng();
+        console.log(end);
+        distance = Math.round(start.distanceTo(end) / 1000.0);
+        marker.bindPopup('La distance entre ta position et  '+cityname +' '+distance+' km');
+        marker.openPopup();
+        console.log(distance);
+        ligne.setLatLngs([marker.getLatLng(), marker2.getLatLng()]);
+        
+       
+      });
 //
 function translateGeoCoords( latitude, longitude, radius )
 {
@@ -108,45 +134,19 @@ console.log(lat,lon);
   apiRequest(lat, lon);
 }
 //
+var positionlatlong = [];
 function onClick()
 {
   var lat = form1.field1.value;
   var lon = form1.field2.value;
- 
+  positionlatlong.splice(0,positionlatlong.length)
+  positionlatlong.push(lat,lon);
   // test
 
   apiRequest(lat, lon);
-  
+ 
    //
-    navigator.geolocation.getCurrentPosition(function(location) {
-  var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-
-  var layer = new L.StamenTileLayer("terrain");
-var map = new L.Map("macarte2", {
-    center: new L.LatLng(location.coords.latitude, location.coords.longitude),
-    zoom: 5
-});
-map.addLayer(layer);
-var latlngs = [[32.296762, -64.790501],[27.101416, -80.900932],[17.947276, -66.353661]];
-var polygon = L.polygon(latlngs, {color: 'red'}).addTo(map);
   
-var marker = L.marker(latlng).addTo(map);
-      var circle = L.circle(marker.getLatLng(),location.coords.accuracy).addTo(map);
-      
-      var marker2 = L.marker([ lat, lon]).addTo(map);
-      var ligne = L.polyline([]).addTo(map);
-    
-        var start = marker.getLatLng();
-        var end = marker2.getLatLng();
-        console.log(end);
-        distance = Math.round(start.distanceTo(end) / 1000.0);
-        marker.bindPopup('La distance entre ta position et  '+cityname +' '+distance+' km');
-        marker.openPopup();
-        console.log(distance);
-        ligne.setLatLngs([marker.getLatLng(), marker2.getLatLng()]);
-        
-       
-      });
 }
  
 function onClear()
