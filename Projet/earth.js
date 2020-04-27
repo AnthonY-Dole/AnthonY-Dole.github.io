@@ -23,7 +23,7 @@ function setup()
     scene = new THREE.Scene();
     geometry = new THREE.SphereGeometry(radius, 30, 30);
     material = new THREE.MeshBasicMaterial({
-        map: THREE.TextureLoader().load("earth_8k.jpg")
+        map: THREE.ImageUtils.loadTexture("earth_8k.jpg")
         
     });
     spherMesh = new THREE.Mesh(geometry, material);
