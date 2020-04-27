@@ -101,7 +101,7 @@ function onLoad()
 }
 function showPosition(position) {
    var lat = position.coords.latitude;
-  var lon = position.coords.latitude;
+  var lon = position.coords.longitude;
 console.log(lat,lon);
   apiRequest(lat, lon);
 }
@@ -138,7 +138,7 @@ function addMarker(lat, lon, col)
   }
  
   var vec3 = translateGeoCoords(lat, lon, radius);
-  var geo = new THREE.BoxGeometry(2,2,20);
+  var geo = new THREE.BoxGeometry(3,3,30);
   var mat = new THREE.MeshBasicMaterial({color:col});
   markers.push(new THREE.Mesh(geo, mat));
   markers[markers.length-1].position.set(vec3.x, vec3.y, vec3.z);
@@ -176,7 +176,7 @@ function apiRequest(lat, lon)
     var temp = new Number(json.main.temp);
     temp -= tempOfset;
  
-    form1.field3.value = json.name + "  |  weather : " + weather + "  |  temp : " + temp.toFixed(1) + "°C  humidity : " + json.main.humidity + "%";
+    form1.field3.value = json.name + "  |  Meteo : " + weather + "  |  Temperature : " + temp.toFixed(1) + "°C  Humidite : " + json.main.humidity + "%";
  
     //
     var col;
